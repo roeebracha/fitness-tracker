@@ -1,0 +1,31 @@
+//roeeba62_db_user
+//wVpH8qnc2MgSLktX
+//mongodb+srv://roeeba62_db_user:wVpH8qnc2MgSLktX@cluster0.i0szyfc.mongodb.net/
+
+
+@hostname = http://localhost:3000
+
+GET {{hostname}}/welcome
+
+###
+GET {{hostname}}/api/users
+
+###
+GET {{hostname}}/api/users/15
+
+###
+DELETE  {{hostname}}/api/users/10
+
+###
+POST {{hostname}}/api/users/
+Content-Type: application/json
+
+{
+"id": 16,
+"firstName": "haim",
+"lastName": "naim",
+"age" : 33,
+"email" : "roeeba66@gmail.com",
+"city" : "netanya",
+"country": "israel"
+}
