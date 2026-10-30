@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AI Coach</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.ui{--radius:.625rem;--background:oklch(1 0 0);--foreground:oklch(.145 0 0);--card:oklch(1 0 0);--card-foreground:oklch(.145 0 0);--primary:oklch(.205 0 0);--primary-foreground:oklch(.985 0 0);--secondary:oklch(.97 0 0);--secondary-foreground:oklch(.205 0 0);--muted:oklch(.97 0 0);--muted-foreground:oklch(.556 0 0);--accent:oklch(.97 0 0);--accent-foreground:oklch(.205 0 0);--destructive:oklch(.577 .245 27.325);--border:oklch(.922 0 0);--input:oklch(.922 0 0);--ring:oklch(.708 0 0);--sidebar:oklch(.985 0 0);--sidebar-foreground:oklch(.145 0 0);--sidebar-accent:oklch(.97 0 0);--sidebar-border:oklch(.922 0 0);font-family:"Geist",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.5;color:var(--foreground);background:var(--background);-webkit-font-smoothing:antialiased;min-height:100vh}
+.ui.dark{--background:oklch(.145 0 0);--foreground:oklch(.985 0 0);--card:oklch(.205 0 0);--card-foreground:oklch(.985 0 0);--primary:oklch(.922 0 0);--primary-foreground:oklch(.205 0 0);--secondary:oklch(.269 0 0);--secondary-foreground:oklch(.985 0 0);--muted:oklch(.269 0 0);--muted-foreground:oklch(.708 0 0);--accent:oklch(.269 0 0);--accent-foreground:oklch(.985 0 0);--destructive:oklch(.704 .191 22.216);--border:oklch(1 0 0 / 10%);--input:oklch(1 0 0 / 15%);--ring:oklch(.556 0 0);--sidebar:oklch(.205 0 0);--sidebar-foreground:oklch(.985 0 0);--sidebar-accent:oklch(.269 0 0);--sidebar-border:oklch(1 0 0 / 10%)}
+.ui *,.ui *::before,.ui *::after{box-sizing:border-box}
+.ui a{color:inherit}
+.ui h1,.ui h2,.ui h3,.ui p,.ui ul,.ui ol{margin:0}
+.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.muted{color:var(--muted-foreground)}
+.num{font-variant-numeric:tabular-nums}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 16px;border-radius:calc(var(--radius) - 2px);border:1px solid transparent;font-family:inherit;font-size:14px;font-weight:500;line-height:1;white-space:nowrap;text-decoration:none;cursor:pointer;transition:background-color .15s,opacity .15s;outline:none}
+.btn:focus-visible{box-shadow:0 0 0 3px color-mix(in oklch,var(--ring) 50%,transparent);border-color:var(--ring)}
+.btn-primary{background:var(--primary);color:var(--primary-foreground);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05)}
+.btn-primary:hover{background:color-mix(in oklch,var(--primary) 90%,transparent)}
+.btn-outline{background:var(--background);color:var(--foreground);border-color:var(--border);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05)}
+.ui.dark .btn-outline{background:color-mix(in oklch,var(--input) 30%,transparent);border-color:var(--input)}
+.btn-outline:hover,.btn-ghost:hover{background:var(--accent);color:var(--accent-foreground)}
+.btn-ghost{background:transparent;color:var(--foreground)}
+.btn-sm{height:32px;padding:0 12px;gap:6px}
+.btn-icon{width:36px;padding:0}
+.btn-sm.btn-icon{width:32px}
+.btn-round{border-radius:999px}
+.btn.off{opacity:.5;pointer-events:none}
+.input{display:block;width:100%;height:36px;min-width:0;padding:4px 12px;border:1px solid var(--input);border-radius:calc(var(--radius) - 2px);background:transparent;color:var(--foreground);font-family:inherit;font-size:14px;box-shadow:0 1px 2px 0 rgb(0 0 0 / .05);outline:none}
+.ui.dark .input{background:color-mix(in oklch,var(--input) 30%,transparent)}
+.input::placeholder{color:var(--muted-foreground)}
+.input:focus-visible{border-color:var(--ring);box-shadow:0 0 0 3px color-mix(in oklch,var(--ring) 50%,transparent)}
+.badge{display:inline-flex;align-items:center;gap:4px;width:fit-content;padding:2px 8px;border:1px solid transparent;border-radius:calc(var(--radius) - 2px);font-size:12px;font-weight:500;line-height:16px;white-space:nowrap}
+.badge-outline{border-color:var(--border);color:var(--foreground)}
+.sep-v{width:1px;height:16px;background:var(--border);flex-shrink:0}
+.av{width:32px;height:32px;border-radius:8px;background:var(--muted);color:var(--foreground);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.app{display:flex;flex-wrap:wrap;min-height:100vh;background:var(--sidebar)}
+.sb{flex:1 1 256px;display:flex;flex-direction:column;padding:8px 0 8px 8px;color:var(--sidebar-foreground);font-size:14px}
+.sb-g{display:flex;flex-direction:column;gap:4px;padding:8px}
+.sb-l{height:32px;display:flex;align-items:center;padding:0 8px;font-size:12px;font-weight:500;color:color-mix(in oklch,var(--sidebar-foreground) 70%,transparent)}
+.sb-b{display:flex;align-items:center;gap:8px;height:32px;padding:8px;border-radius:calc(var(--radius) - 2px);color:var(--sidebar-foreground);text-decoration:none;font-size:14px;white-space:nowrap;overflow:hidden}
+.sb-b:hover{background:var(--sidebar-accent)}
+.sb-b.on{background:var(--sidebar-accent);font-weight:500}
+.sb-b.lg{height:48px}
+.logo{width:32px;height:32px;border-radius:8px;background:var(--primary);color:var(--primary-foreground);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.main{flex:999 1 560px;min-width:0;margin:8px;background:var(--background);border-radius:calc(var(--radius) + 4px);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05);display:flex;flex-direction:column;overflow:hidden}
+.ui.dark .main{border:1px solid var(--border)}
+.hdr{height:48px;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+@media (min-width:768px){.app{height:100vh;min-height:0}.main{height:calc(100vh - 16px)}}
+.chat{flex:1;display:flex;min-height:0}
+.hist{flex:0 0 248px;display:flex;flex-direction:column;gap:2px;padding:12px 8px;border-right:1px solid var(--border);overflow:auto}
+@media (max-width:960px){.hist{display:none}}
+.hist-l{padding:16px 8px 4px;font-size:12px;font-weight:500;color:var(--muted-foreground)}
+.hist-i{display:flex;align-items:center;height:32px;padding:0 8px;border:0;border-radius:calc(var(--radius) - 2px);background:transparent;color:var(--foreground);font-family:inherit;font-size:14px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;width:100%}
+.hist-i:hover{background:var(--accent)}
+.hist-i.on{background:var(--accent);font-weight:500}
+.convo{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0}
+.scroll{flex:1;min-height:0;overflow:auto}
+.thread{max-width:768px;margin:0 auto;padding:32px 24px 24px;display:flex;flex-direction:column;gap:32px}
+.msg-u{align-self:flex-end;max-width:75%;padding:10px 18px;border-radius:24px;background:var(--muted);white-space:pre-wrap}
+.msg-a{display:flex;gap:16px;align-items:flex-start}
+.bot{width:28px;height:28px;border-radius:999px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.bot .i{width:14px;height:14px}
+.md{flex:1;min-width:0;line-height:1.75;display:flex;flex-direction:column;gap:12px}
+.md ul,.md ol{padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.md b{font-weight:600}
+.md code{font-family:"Geist Mono",ui-monospace,monospace;font-size:14px;padding:1px 6px;border-radius:6px;background:var(--muted)}
+.acts{display:flex;gap:2px;margin-left:-8px;color:var(--muted-foreground)}
+.acts .btn{color:var(--muted-foreground)}
+.plan{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-size:14px;line-height:1.5}
+.plan>div{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border)}
+.plan>div:last-child{border-bottom:0}
+.plan .h{background:var(--muted);font-weight:500}
+.comp-wrap{padding:0 24px 12px;flex-shrink:0}
+.comp{max-width:768px;margin:0 auto;display:grid;gap:4px;padding:12px 10px 10px 18px;border:1px solid var(--input);border-radius:28px;background:var(--background);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05),0 8px 24px -12px rgb(0 0 0 / .12)}
+.ui.dark .comp{background:var(--card)}
+.comp:focus-within{border-color:var(--ring)}
+.comp textarea{display:block;width:100%;min-height:28px;max-height:200px;padding:2px 0;border:0;outline:none;resize:none;background:transparent;color:var(--foreground);font-family:inherit;font-size:16px;line-height:1.5}
+.comp textarea::placeholder{color:var(--muted-foreground)}
+.chip{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:1px solid var(--border);border-radius:999px;background:var(--background);color:var(--foreground);font-family:inherit;font-size:14px;cursor:pointer;transition:background-color .15s}
+.chip:hover{background:var(--accent)}
+.chip .i{color:var(--muted-foreground)}
+</style>
+</helmet>
+<div class="ui {{theme}}">
+<div class="app">
+  <aside class="sb" aria-label="Sidebar">
+    <div class="sb-g">
+      <a class="sb-b lg" href="Overview.dc.html">
+        <span class="logo"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg></span>
+        <span style="display:grid;line-height:1.25"><span style="font-weight:600">Fitness Tracker</span><span class="muted" style="font-size:12px">Personal</span></span>
+      </a>
+    </div>
+    <nav class="sb-g" aria-label="Training">
+      <div class="sb-l">Training</div>
+      <a class="sb-b" href="Overview.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>Overview</a>
+      <a class="sb-b" href="Workouts.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.4 14.4 9.6 9.6"></path><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z"></path><path d="m21.5 21.5-1.4-1.4"></path><path d="M3.9 3.9 2.5 2.5"></path><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"></path></svg>Workouts</a>
+      <a class="sb-b" href="History.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg>History</a>
+    </nav>
+    <nav class="sb-g" aria-label="Analytics">
+      <div class="sb-l">Analytics</div>
+      <a class="sb-b" href="Stats.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>Stats</a>
+      <a class="sb-b" href="Insights.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>Insights</a>
+      <a class="sb-b on" href="Main.dc.html" aria-current="page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path></svg>AI Coach</a>
+    </nav>
+    <div class="sb-g" style="margin-top:auto">
+      <a class="sb-b lg" href="#" aria-label="Account menu – Dana Levi">
+        <span class="av">DL</span>
+        <span style="display:grid;line-height:1.25;flex:1;min-width:0"><span style="font-weight:500">Dana Levi</span><span class="muted" style="font-size:12px;overflow:hidden;text-overflow:ellipsis">dana@example.com</span></span>
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="hdr">
+      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Toggle sidebar" style="margin-left:-4px"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path></svg></button>
+      <span class="sep-v" style="margin-right:4px"></span>
+      <button class="btn btn-ghost btn-sm" type="button" aria-haspopup="menu" style="font-size:16px;font-weight:600;padding:0 8px">AI Coach<svg class="i muted" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:4px">
+        <button class="btn btn-ghost btn-sm" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" x2="12" y1="2" y2="15"></line></svg>Share</button>
+        <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="New chat" onClick="{{newChat}}"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg></button>
+      </div>
+    </header>
+
+    <div class="chat">
+      <nav class="hist" aria-label="Chat history">
+        <button class="btn btn-ghost" type="button" style="justify-content:flex-start;padding:0 8px;width:100%" onClick="{{newChat}}"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>New chat</button>
+        <div style="position:relative;margin:4px 0">
+          <svg class="i muted" viewBox="0 0 24 24" aria-hidden="true" style="position:absolute;left:10px;top:8px"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+          <input class="input" type="search" placeholder="Search chats" aria-label="Search chats" style="height:32px;padding-left:32px">
+        </div>
+        <p class="hist-l">Today</p>
+        <button class="hist-i {{seedOn}}" type="button" onClick="{{openSeed}}">10K race plan</button>
+        <p class="hist-l">Yesterday</p>
+        <button class="hist-i" type="button">Knee pain after long run</button>
+        <button class="hist-i" type="button">Strength split for runners</button>
+        <p class="hist-l">Previous 7 days</p>
+        <button class="hist-i" type="button">Easy pace vs zone 2</button>
+        <button class="hist-i" type="button">Carb loading before a half</button>
+        <button class="hist-i" type="button">Is my resting HR normal?</button>
+      </nav>
+
+      <section class="convo" aria-label="Conversation">
+        <sc-if value="{{showEmpty}}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:24px">
+            <h1 style="font-size:28px;font-weight:600;letter-spacing:-.02em;text-align:center">What are we training today?</h1>
+            <div style="width:100%;max-width:768px">
+              <div class="comp">
+                <label for="cmp0" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Message AI Coach</label>
+                <textarea id="cmp0" rows="1" placeholder="Ask about your training…" value="{{draft}}" onChange="{{setDraft}}" onKeyDown="{{onKey}}"></textarea>
+                <div style="display:flex;align-items:center;gap:4px">
+                  <button class="btn btn-ghost btn-sm btn-icon btn-round" type="button" aria-label="Attach a workout"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></button>
+                  <span style="flex:1"></span>
+                  <button class="btn btn-ghost btn-sm btn-icon btn-round" type="button" aria-label="Voice input"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" x2="12" y1="19" y2="22"></line></svg></button>
+                  <button class="btn btn-primary btn-icon btn-round {{sendCls}}" type="button" aria-label="Send message" onClick="{{send}}"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg></button>
+                </div>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:16px">
+                <sc-for list="{{suggestions}}" as="sg" hint-placeholder-count="4">
+                  <button class="chip" type="button" onClick="{{sg.ask}}"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path></svg>{{sg.label}}</button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{showThread}}" hint-placeholder-val="{{ true }}">
+          <div class="scroll" ref="{{scrollRef}}">
+            <div class="thread">
+              <sc-if value="{{showSeed}}" hint-placeholder-val="{{ true }}">
+                <div class="msg-u">I have a 10K race in 3 weeks. How should I adjust my training?</div>
+
+                <div class="msg-a">
+                  <span class="bot" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path></svg></span>
+                  <div class="md">
+                    <p>You are averaging <b>~44 km a week</b> and your 10K PR is <b>49:12</b> (Aug 30), so a sub-48 race is realistic. Here is a 3-week block that sharpens speed while cutting volume before race day:</p>
+                    <div class="plan">
+                      <div class="h"><span>Week</span><span>Focus</span><span>Volume</span></div>
+                      <div><span class="num">Oct 19–25</span><span>Keep volume. Intervals 5×1 km at <code>4:45/km</code></span><span class="num muted">~44 km</span></div>
+                      <div><span class="num">Oct 26–Nov 1</span><span>Taper starts. Tempo 5 km at <code>4:50/km</code></span><span class="num muted">~36 km</span></div>
+                      <div><span class="num">Race week</span><span>Two short easy runs + 4×200 m strides</span><span class="num muted">~22 km</span></div>
+                    </div>
+                    <p><b>One flag:</b> last Friday’s tempo (RPE 8) was followed by strength on Saturday (RPE 7). During this block, keep strength on easy days so your quality sessions stay fresh.</p>
+                    <div class="acts">
+                      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Copy"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button>
+                      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Good response"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"></path></svg></button>
+                      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Bad response"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2"></path><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"></path></svg></button>
+                      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Regenerate"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg></button>
+                      <a class="btn btn-ghost btn-sm" href="Workouts.dc.html" style="color:var(--muted-foreground)"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>Add to workouts</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="msg-u">What pace should I target on race day?</div>
+
+                <div class="msg-a">
+                  <span class="bot" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path></svg></span>
+                  <div class="md">
+                    <p>Aim for <b>4:45–4:48 /km</b>, which finishes in about 47:30–48:00.</p>
+                    <ol>
+                      <li><b>Km 1:</b> start at 4:50. Going out too fast is the most common 10K mistake.</li>
+                      <li><b>Km 2–7:</b> settle into goal pace and run by effort (RPE 7–8).</li>
+                      <li><b>Km 8–10:</b> if you feel good, push and close under 4:40.</li>
+                    </ol>
+                    <div class="acts">
+                      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Copy"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button>
+                      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Good response"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12"></path><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"></path></svg></button>
+                      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Bad response"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2"></path><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"></path></svg></button>
+                      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Regenerate"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg></button>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-for list="{{extra}}" as="m" hint-placeholder-count="0">
+                <sc-if value="{{m.isUser}}" hint-placeholder-val="{{ true }}">
+                  <div class="msg-u">{{m.text}}</div>
+                </sc-if>
+                <sc-if value="{{m.isAI}}" hint-placeholder-val="{{ false }}">
+                  <div class="msg-a">
+                    <span class="bot" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path></svg></span>
+                    <div class="md"><p class="muted">{{m.text}}</p></div>
+                  </div>
+                </sc-if>
+              </sc-for>
+            </div>
+          </div>
+
+          <div class="comp-wrap">
+            <div class="comp">
+              <label for="cmp1" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Message AI Coach</label>
+              <textarea id="cmp1" rows="1" placeholder="Ask about your training…" value="{{draft}}" onChange="{{setDraft}}" onKeyDown="{{onKey}}"></textarea>
+              <div style="display:flex;align-items:center;gap:4px">
+                <button class="btn btn-ghost btn-sm btn-icon btn-round" type="button" aria-label="Attach a workout"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></button>
+                <span class="badge badge-outline" style="border-radius:999px;color:var(--muted-foreground)">Context: last 28 days</span>
+                <span style="flex:1"></span>
+                <button class="btn btn-ghost btn-sm btn-icon btn-round" type="button" aria-label="Voice input"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" x2="12" y1="19" y2="22"></line></svg></button>
+                <button class="btn btn-primary btn-icon btn-round {{sendCls}}" type="button" aria-label="Send message" onClick="{{send}}"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg></button>
+              </div>
+            </div>
+            <p class="muted" style="text-align:center;font-size:12px;margin-top:8px">AI Coach can make mistakes. It is not medical advice.</p>
+          </div>
+        </sc-if>
+      </section>
+    </div>
+  </main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"empty":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  componentDidUpdate() {
+    if (this.pendingScroll && this.scrollEl) {
+      this.scrollEl.scrollTop = this.scrollEl.scrollHeight;
+      this.pendingScroll = false;
+    }
+  }
+  renderVals() {
+    const s = this.state || {};
+    const draft = s.draft || '';
+    const extra = s.extra || [];
+    const seed = s.seed !== undefined ? s.seed : !this.props.empty;
+    const send = (text) => {
+      const t = (typeof text === 'string' ? text : draft).trim();
+      if (!t) return;
+      this.pendingScroll = true;
+      this.setState({
+        draft: '',
+        extra: extra.concat([
+          { isUser: true, isAI: false, text: t },
+          { isUser: false, isAI: true, text: 'Design prototype: no model is connected yet. In the app, this reply streams from your coach API, using your workout history as context.' }
+        ])
+      });
+    };
+    if (!this.scrollRef) this.scrollRef = (el) => { this.scrollEl = el; };
+    const showEmpty = !seed && extra.length === 0;
+    return {
+      theme: this.props.dark ? 'dark' : '',
+      draft: draft,
+      setDraft: (e) => this.setState({ draft: e.target.value }),
+      onKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } },
+      send: () => send(),
+      sendCls: draft.trim() ? '' : 'off',
+      newChat: () => this.setState({ seed: false, extra: [], draft: '' }),
+      openSeed: () => this.setState({ seed: true, extra: [] }),
+      seedOn: seed ? 'on' : '',
+      showEmpty: showEmpty,
+      showThread: !showEmpty,
+      showSeed: seed,
+      extra: extra,
+      scrollRef: this.scrollRef,
+      suggestions: ['Plan my week', 'Analyze my last run', 'Am I overtraining?', 'Build a 10K plan'].map((l) => ({ label: l, ask: () => send(l) }))
+    };
+  }
+}
+</script>
+</body>
+</html>
