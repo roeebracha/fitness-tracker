@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Workouts – New workout</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.ui{--radius:.625rem;--background:oklch(1 0 0);--foreground:oklch(.145 0 0);--card:oklch(1 0 0);--card-foreground:oklch(.145 0 0);--primary:oklch(.205 0 0);--primary-foreground:oklch(.985 0 0);--secondary:oklch(.97 0 0);--secondary-foreground:oklch(.205 0 0);--muted:oklch(.97 0 0);--muted-foreground:oklch(.556 0 0);--accent:oklch(.97 0 0);--accent-foreground:oklch(.205 0 0);--destructive:oklch(.577 .245 27.325);--border:oklch(.922 0 0);--input:oklch(.922 0 0);--ring:oklch(.708 0 0);--sidebar:oklch(.985 0 0);--sidebar-foreground:oklch(.145 0 0);--sidebar-accent:oklch(.97 0 0);--sidebar-border:oklch(.922 0 0);font-family:"Geist",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.5;color:var(--foreground);background:var(--background);-webkit-font-smoothing:antialiased;min-height:100vh}
+.ui.dark{--background:oklch(.145 0 0);--foreground:oklch(.985 0 0);--card:oklch(.205 0 0);--card-foreground:oklch(.985 0 0);--primary:oklch(.922 0 0);--primary-foreground:oklch(.205 0 0);--secondary:oklch(.269 0 0);--secondary-foreground:oklch(.985 0 0);--muted:oklch(.269 0 0);--muted-foreground:oklch(.708 0 0);--accent:oklch(.269 0 0);--accent-foreground:oklch(.985 0 0);--destructive:oklch(.704 .191 22.216);--border:oklch(1 0 0 / 10%);--input:oklch(1 0 0 / 15%);--ring:oklch(.556 0 0);--sidebar:oklch(.205 0 0);--sidebar-foreground:oklch(.985 0 0);--sidebar-accent:oklch(.269 0 0);--sidebar-border:oklch(1 0 0 / 10%)}
+.ui *,.ui *::before,.ui *::after{box-sizing:border-box}
+.ui a{color:inherit}
+.ui h1,.ui h2,.ui h3,.ui p{margin:0}
+.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.muted{color:var(--muted-foreground)}
+.num{font-variant-numeric:tabular-nums}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 16px;border-radius:calc(var(--radius) - 2px);border:1px solid transparent;font-family:inherit;font-size:14px;font-weight:500;line-height:1;white-space:nowrap;text-decoration:none;cursor:pointer;transition:background-color .15s;outline:none}
+.btn:focus-visible{box-shadow:0 0 0 3px color-mix(in oklch,var(--ring) 50%,transparent);border-color:var(--ring)}
+.btn-primary{background:var(--primary);color:var(--primary-foreground);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05)}
+.ui a.btn-primary{color:var(--primary-foreground)}
+.btn-primary:hover{background:color-mix(in oklch,var(--primary) 90%,transparent)}
+.btn-outline{background:var(--background);color:var(--foreground);border-color:var(--border);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05)}
+.ui.dark .btn-outline{background:color-mix(in oklch,var(--input) 30%,transparent);border-color:var(--input)}
+.btn-outline:hover,.btn-ghost:hover{background:var(--accent);color:var(--accent-foreground)}
+.btn-ghost{background:transparent;color:var(--foreground)}
+.btn-sm{height:32px;padding:0 12px;gap:6px}
+.btn-icon{width:36px;padding:0}
+.btn-sm.btn-icon{width:32px}
+.card{background:var(--card);color:var(--card-foreground);border:1px solid var(--border);border-radius:calc(var(--radius) + 4px);padding:24px 0;display:flex;flex-direction:column;gap:24px;box-shadow:0 1px 2px 0 rgb(0 0 0 / .05);min-width:0}
+.card-h{padding:0 24px;display:grid;grid-template-columns:minmax(0,1fr) auto;row-gap:6px;column-gap:12px;align-items:start}
+.card-t{font-size:16px;font-weight:600;line-height:1}
+.card-d{font-size:14px;color:var(--muted-foreground);grid-column:1}
+.card-a{grid-column:2;grid-row:1 / span 2;justify-self:end;align-self:start}
+.card-c{padding:0 24px}
+.card-f{padding:0 24px;display:flex;align-items:center;gap:8px}
+.card-f.bt{border-top:1px solid var(--border);padding-top:24px}
+.input{display:block;width:100%;height:36px;min-width:0;padding:4px 12px;border:1px solid var(--input);border-radius:calc(var(--radius) - 2px);background:transparent;color:var(--foreground);font-family:inherit;font-size:14px;box-shadow:0 1px 2px 0 rgb(0 0 0 / .05);outline:none;transition:box-shadow .15s,border-color .15s}
+.ui.dark .input{background:color-mix(in oklch,var(--input) 30%,transparent);color-scheme:dark}
+.input::placeholder{color:var(--muted-foreground)}
+.input:focus-visible{border-color:var(--ring);box-shadow:0 0 0 3px color-mix(in oklch,var(--ring) 50%,transparent)}
+textarea.input{height:auto;min-height:80px;padding:8px 12px;resize:vertical;line-height:1.5}
+.label{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;line-height:1}
+.field{display:grid;gap:12px;align-content:start}
+.hint{font-size:14px;color:var(--muted-foreground)}
+.badge{display:inline-flex;align-items:center;gap:4px;width:fit-content;padding:2px 8px;border:1px solid transparent;border-radius:calc(var(--radius) - 2px);font-size:12px;font-weight:500;line-height:16px;white-space:nowrap}
+.badge-secondary{background:var(--secondary);color:var(--secondary-foreground)}
+.badge-outline{border-color:var(--border);color:var(--foreground)}
+.sep{height:1px;width:100%;background:var(--border);border:0;margin:0;flex-shrink:0}
+.sep-v{width:1px;height:16px;background:var(--border);flex-shrink:0}
+.tg{display:inline-flex;flex-wrap:wrap;border-radius:calc(var(--radius) - 2px);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05)}
+.tg-i{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--input);margin-left:-1px;background:transparent;color:var(--foreground);font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:background-color .15s}
+.tg-i:first-child{margin-left:0;border-radius:calc(var(--radius) - 2px) 0 0 calc(var(--radius) - 2px)}
+.tg-i:last-child{border-radius:0 calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0}
+.tg-i:hover{background:var(--muted);color:var(--muted-foreground)}
+.tg-i.on{background:var(--accent);color:var(--accent-foreground)}
+.ui.dark .tg-i.on{background:var(--input)}
+.range{-webkit-appearance:none;appearance:none;width:100%;height:6px;margin:5px 0;border-radius:999px;outline:none;cursor:pointer}
+.range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:999px;background:var(--background);border:1px solid var(--primary);box-shadow:0 1px 3px 0 rgb(0 0 0 / .1)}
+.range::-moz-range-thumb{width:16px;height:16px;border-radius:999px;background:var(--background);border:1px solid var(--primary)}
+.range:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color-mix(in oklch,var(--ring) 50%,transparent)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl thead tr{background:var(--muted)}
+.tbl tr{border-bottom:1px solid var(--border)}
+.tbl tbody tr:last-child{border-bottom:0}
+.tbl th{height:40px;padding:0 8px;text-align:left;font-weight:500;white-space:nowrap}
+.tbl td{padding:6px 8px;white-space:nowrap;vertical-align:middle}
+.tbl .input{height:32px}
+.tpl{display:flex;align-items:center;gap:12px;width:100%;padding:8px;border:0;border-radius:calc(var(--radius) - 2px);background:transparent;color:var(--foreground);font-family:inherit;text-align:left;cursor:pointer;transition:background-color .15s}
+.tpl:hover{background:var(--accent)}
+.tile{width:36px;height:36px;border-radius:8px;background:var(--muted);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.av{width:32px;height:32px;border-radius:8px;background:var(--muted);color:var(--foreground);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.app{display:flex;flex-wrap:wrap;min-height:100vh;background:var(--sidebar)}
+.sb{flex:1 1 256px;display:flex;flex-direction:column;padding:8px 0 8px 8px;color:var(--sidebar-foreground);font-size:14px}
+.sb-g{display:flex;flex-direction:column;gap:4px;padding:8px}
+.sb-l{height:32px;display:flex;align-items:center;padding:0 8px;font-size:12px;font-weight:500;color:color-mix(in oklch,var(--sidebar-foreground) 70%,transparent)}
+.sb-b{display:flex;align-items:center;gap:8px;height:32px;padding:8px;border-radius:calc(var(--radius) - 2px);color:var(--sidebar-foreground);text-decoration:none;font-size:14px;white-space:nowrap;overflow:hidden}
+.sb-b:hover{background:var(--sidebar-accent)}
+.sb-b.on{background:var(--sidebar-accent);font-weight:500}
+.sb-b.lg{height:48px}
+.logo{width:32px;height:32px;border-radius:8px;background:var(--primary);color:var(--primary-foreground);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.main{flex:999 1 560px;min-width:0;margin:8px;background:var(--background);border-radius:calc(var(--radius) + 4px);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05);display:flex;flex-direction:column}
+.ui.dark .main{border:1px solid var(--border)}
+.hdr{height:48px;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.crumb{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted-foreground);min-width:0}
+.crumb .i{width:14px;height:14px}
+.crumb .cur{color:var(--foreground)}
+.page{padding:24px;display:flex;flex-direction:column;gap:24px}
+.ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.ph h1{font-size:24px;font-weight:600;letter-spacing:-.025em;line-height:32px}
+.row{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
+</style>
+</helmet>
+<div class="ui {{theme}}">
+<div class="app">
+  <aside class="sb" aria-label="Sidebar">
+    <div class="sb-g">
+      <a class="sb-b lg" href="Overview.dc.html">
+        <span class="logo"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg></span>
+        <span style="display:grid;line-height:1.25"><span style="font-weight:600">Fitness Tracker</span><span class="muted" style="font-size:12px">Personal</span></span>
+      </a>
+    </div>
+    <nav class="sb-g" aria-label="Training">
+      <div class="sb-l">Training</div>
+      <a class="sb-b" href="Overview.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>Overview</a>
+      <a class="sb-b on" href="Workouts.dc.html" aria-current="page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.4 14.4 9.6 9.6"></path><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z"></path><path d="m21.5 21.5-1.4-1.4"></path><path d="M3.9 3.9 2.5 2.5"></path><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"></path></svg>Workouts</a>
+      <a class="sb-b" href="History.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg>History</a>
+    </nav>
+    <nav class="sb-g" aria-label="Analytics">
+      <div class="sb-l">Analytics</div>
+      <a class="sb-b" href="Stats.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>Stats</a>
+      <a class="sb-b" href="Insights.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>Insights</a>
+      <a class="sb-b" href="Main.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path></svg>AI Coach</a>
+    </nav>
+    <div class="sb-g" style="margin-top:auto">
+      <a class="sb-b lg" href="#" aria-label="Account menu – Dana Levi">
+        <span class="av">DL</span>
+        <span style="display:grid;line-height:1.25;flex:1;min-width:0"><span style="font-weight:500">Dana Levi</span><span class="muted" style="font-size:12px;overflow:hidden;text-overflow:ellipsis">dana@example.com</span></span>
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="hdr">
+      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Toggle sidebar" style="margin-left:-4px"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path></svg></button>
+      <span class="sep-v" style="margin-right:4px"></span>
+      <nav class="crumb" aria-label="Breadcrumb"><span>Workouts</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg><span class="cur" aria-current="page">New workout</span></nav>
+    </header>
+
+    <div class="page">
+      <div class="ph">
+        <div style="display:grid;gap:4px">
+          <h1>New workout</h1>
+          <p class="muted" style="font-size:14px">Log a session, or start from a template.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <form class="card" style="flex:2 1 560px">
+          <div class="card-h">
+            <h2 class="card-t">Workout details</h2>
+            <p class="card-d">Fields marked * are required.</p>
+          </div>
+          <div class="card-c" style="display:grid;gap:24px">
+            <div class="field">
+              <span class="label" id="type-l">Type *</span>
+              <div class="tg" role="group" aria-labelledby="type-l">
+                <sc-for list="{{types}}" as="t" hint-placeholder-count="5">
+                  <button class="tg-i {{t.cls}}" type="button" aria-pressed="{{t.pressed}}" onClick="{{t.pick}}">{{t.name}}</button>
+                </sc-for>
+              </div>
+            </div>
+
+            <div class="fgrid">
+              <div class="field">
+                <label class="label" for="w-name">Name *</label>
+                <input class="input" id="w-name" type="text" placeholder="e.g. Tempo run">
+              </div>
+              <div class="field">
+                <label class="label" for="w-date">Date *</label>
+                <input class="input" id="w-date" type="date" value="2026-10-19">
+              </div>
+              <div class="field">
+                <label class="label" for="w-time">Start time</label>
+                <input class="input" id="w-time" type="time" value="07:30">
+              </div>
+              <div class="field">
+                <label class="label" for="w-dur">Duration (min) *</label>
+                <input class="input" id="w-dur" type="number" min="1" placeholder="45">
+              </div>
+            </div>
+
+            <sc-if value="{{showEndurance}}" hint-placeholder-val="{{ true }}">
+              <div class="fgrid">
+                <div class="field">
+                  <label class="label" for="w-dist">Distance (km)</label>
+                  <input class="input" id="w-dist" type="number" step="0.1" min="0" placeholder="8.0">
+                </div>
+                <div class="field">
+                  <label class="label" for="w-hr">Avg heart rate (bpm)</label>
+                  <input class="input" id="w-hr" type="number" min="30" placeholder="145">
+                </div>
+                <div class="field">
+                  <label class="label" for="w-elev">Elevation gain (m)</label>
+                  <input class="input" id="w-elev" type="number" min="0" placeholder="120">
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{showStrength}}" hint-placeholder-val="{{ false }}">
+              <div class="field">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <span class="label">Exercises</span>
+                  <button class="btn btn-outline btn-sm" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>Add exercise</button>
+                </div>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead><tr><th>Exercise</th><th style="width:96px">Sets</th><th style="width:96px">Reps</th><th style="width:120px">Weight (kg)</th><th style="width:44px"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Remove</span></th></tr></thead>
+                    <tbody>
+                      <sc-for list="{{exercises}}" as="ex" hint-placeholder-count="3">
+                        <tr>
+                          <td><input class="input" type="text" value="{{ex.name}}" aria-label="Exercise"></td>
+                          <td><input class="input num" type="number" value="{{ex.sets}}" aria-label="Sets"></td>
+                          <td><input class="input num" type="number" value="{{ex.reps}}" aria-label="Reps"></td>
+                          <td><input class="input num" type="text" value="{{ex.kg}}" aria-label="Weight in kg"></td>
+                          <td><button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Remove exercise"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></td>
+                        </tr>
+                      </sc-for>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </sc-if>
+
+            <div class="field">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <label class="label" for="w-rpe">Effort (RPE)</label>
+                <span class="num" style="font-size:14px;font-weight:500">{{rpe}} <span class="muted" style="font-weight:400">/ 10 · {{rpeLabel}}</span></span>
+              </div>
+              <input class="range" id="w-rpe" type="range" min="1" max="10" step="1" value="{{rpe}}" onChange="{{setRpe}}" style="{{rpeTrack}}">
+            </div>
+
+            <div class="field">
+              <label class="label" for="w-notes">Notes</label>
+              <textarea class="input" id="w-notes" placeholder="How did it feel? Route, weather, shoes…"></textarea>
+              <p class="hint">Visible only to you.</p>
+            </div>
+          </div>
+          <div class="card-f bt" style="justify-content:flex-end">
+            <a class="btn btn-outline" href="Overview.dc.html">Cancel</a>
+            <a class="btn btn-primary" href="History.dc.html">Save workout</a>
+          </div>
+        </form>
+
+        <div style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:16px">
+          <div class="card">
+            <div class="card-h">
+              <h2 class="card-t">Quick start</h2>
+              <p class="card-d">Templates from your recent sessions</p>
+            </div>
+            <div class="card-c" style="display:grid;gap:4px;padding:0 16px">
+              <sc-for list="{{templates}}" as="tp" hint-placeholder-count="4">
+                <button class="tpl" type="button" onClick="{{tp.use}}">
+                  <span class="tile"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg></span>
+                  <span style="display:grid;flex:1;min-width:0;line-height:1.3"><span style="font-size:14px;font-weight:500">{{tp.name}}</span><span class="muted" style="font-size:12px">{{tp.meta}}</span></span>
+                  <svg class="i muted" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-h">
+              <h2 class="card-t">Last workout</h2>
+              <p class="card-d">Yesterday · Sun, Oct 18</p>
+              <div class="card-a"><span class="badge badge-outline">Run</span></div>
+            </div>
+            <div class="card-c" style="display:grid;gap:16px">
+              <p style="font-size:14px;font-weight:500">Long run</p>
+              <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+                <div style="display:grid;gap:2px"><span class="muted" style="font-size:12px">Distance</span><span class="num" style="font-weight:600">18.0 km</span></div>
+                <div style="display:grid;gap:2px"><span class="muted" style="font-size:12px">Time</span><span class="num" style="font-weight:600">1:42:10</span></div>
+                <div style="display:grid;gap:2px"><span class="muted" style="font-size:12px">Pace</span><span class="num" style="font-weight:600">5:41 /km</span></div>
+              </div>
+            </div>
+            <div class="card-f">
+              <button class="btn btn-outline btn-sm" type="button" style="width:100%"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>Repeat this workout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1140}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const type = s.type || 'Run';
+    const rpe = s.rpe || 6;
+    const labels = ['', 'Very easy', 'Easy', 'Easy', 'Moderate', 'Moderate', 'Somewhat hard', 'Hard', 'Very hard', 'Very hard', 'Max'];
+    const pct = ((rpe - 1) / 9) * 100;
+    const names = ['Run', 'Strength', 'Cycling', 'Swim', 'Other'];
+    return {
+      theme: this.props.dark ? 'dark' : '',
+      types: names.map((n) => ({
+        name: n,
+        cls: n === type ? 'on' : '',
+        pressed: n === type ? 'true' : 'false',
+        pick: () => this.setState({ type: n })
+      })),
+      showStrength: type === 'Strength',
+      showEndurance: type !== 'Strength',
+      rpe: rpe,
+      rpeLabel: labels[rpe],
+      rpeTrack: 'background: linear-gradient(to right, var(--primary) ' + pct + '%, var(--muted) ' + pct + '%)',
+      setRpe: (e) => this.setState({ rpe: Number(e.target.value) }),
+      exercises: [
+        { name: 'Bench press', sets: 4, reps: 8, kg: '60' },
+        { name: 'Pull-up', sets: 4, reps: 6, kg: 'BW' },
+        { name: 'Overhead press', sets: 3, reps: 10, kg: '35' }
+      ],
+      templates: [
+        { name: 'Easy run', meta: 'Run · 45 min · RPE 4', use: () => this.setState({ type: 'Run', rpe: 4 }) },
+        { name: 'Intervals 6×800 m', meta: 'Run · 52 min · RPE 9', use: () => this.setState({ type: 'Run', rpe: 9 }) },
+        { name: 'Upper body', meta: 'Strength · 55 min · RPE 7', use: () => this.setState({ type: 'Strength', rpe: 7 }) },
+        { name: 'Recovery spin', meta: 'Cycling · 45 min · RPE 3', use: () => this.setState({ type: 'Cycling', rpe: 3 }) }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

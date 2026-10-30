@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dashboard – Overview</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.ui{--radius:.625rem;--background:oklch(1 0 0);--foreground:oklch(.145 0 0);--card:oklch(1 0 0);--card-foreground:oklch(.145 0 0);--primary:oklch(.205 0 0);--primary-foreground:oklch(.985 0 0);--secondary:oklch(.97 0 0);--secondary-foreground:oklch(.205 0 0);--muted:oklch(.97 0 0);--muted-foreground:oklch(.556 0 0);--accent:oklch(.97 0 0);--accent-foreground:oklch(.205 0 0);--destructive:oklch(.577 .245 27.325);--border:oklch(.922 0 0);--input:oklch(.922 0 0);--ring:oklch(.708 0 0);--chart-1:oklch(.646 .222 41.116);--chart-2:oklch(.6 .118 184.704);--chart-3:oklch(.398 .07 227.392);--chart-4:oklch(.828 .189 84.429);--chart-5:oklch(.769 .188 70.08);--sidebar:oklch(.985 0 0);--sidebar-foreground:oklch(.145 0 0);--sidebar-accent:oklch(.97 0 0);--sidebar-border:oklch(.922 0 0);font-family:"Geist",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.5;color:var(--foreground);background:var(--background);-webkit-font-smoothing:antialiased;min-height:100vh}
+.ui.dark{--background:oklch(.145 0 0);--foreground:oklch(.985 0 0);--card:oklch(.205 0 0);--card-foreground:oklch(.985 0 0);--primary:oklch(.922 0 0);--primary-foreground:oklch(.205 0 0);--secondary:oklch(.269 0 0);--secondary-foreground:oklch(.985 0 0);--muted:oklch(.269 0 0);--muted-foreground:oklch(.708 0 0);--accent:oklch(.269 0 0);--accent-foreground:oklch(.985 0 0);--destructive:oklch(.704 .191 22.216);--border:oklch(1 0 0 / 10%);--input:oklch(1 0 0 / 15%);--ring:oklch(.556 0 0);--chart-1:oklch(.488 .243 264.376);--chart-2:oklch(.696 .17 162.48);--chart-3:oklch(.769 .188 70.08);--chart-4:oklch(.627 .265 303.9);--chart-5:oklch(.645 .246 16.439);--sidebar:oklch(.205 0 0);--sidebar-foreground:oklch(.985 0 0);--sidebar-accent:oklch(.269 0 0);--sidebar-border:oklch(1 0 0 / 10%)}
+.ui *,.ui *::before,.ui *::after{box-sizing:border-box}
+.ui a{color:inherit}
+.ui h1,.ui h2,.ui h3,.ui p{margin:0}
+.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.muted{color:var(--muted-foreground)}
+.num{font-variant-numeric:tabular-nums}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 16px;border-radius:calc(var(--radius) - 2px);border:1px solid transparent;font-family:inherit;font-size:14px;font-weight:500;line-height:1;white-space:nowrap;text-decoration:none;cursor:pointer;transition:background-color .15s;outline:none}
+.btn:focus-visible{box-shadow:0 0 0 3px color-mix(in oklch,var(--ring) 50%,transparent);border-color:var(--ring)}
+.btn-primary{background:var(--primary);color:var(--primary-foreground);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05)}
+.ui a.btn-primary{color:var(--primary-foreground)}
+.btn-primary:hover{background:color-mix(in oklch,var(--primary) 90%,transparent)}
+.btn-outline{background:var(--background);color:var(--foreground);border-color:var(--border);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05)}
+.ui.dark .btn-outline{background:color-mix(in oklch,var(--input) 30%,transparent);border-color:var(--input)}
+.btn-outline:hover,.btn-ghost:hover{background:var(--accent);color:var(--accent-foreground)}
+.btn-ghost{background:transparent;color:var(--foreground)}
+.btn-sm{height:32px;padding:0 12px;gap:6px}
+.btn-icon{width:36px;padding:0}
+.btn-sm.btn-icon{width:32px}
+.card{background:var(--card);color:var(--card-foreground);border:1px solid var(--border);border-radius:calc(var(--radius) + 4px);padding:24px 0;display:flex;flex-direction:column;gap:24px;box-shadow:0 1px 2px 0 rgb(0 0 0 / .05);min-width:0}
+.card-h{padding:0 24px;display:grid;grid-template-columns:minmax(0,1fr) auto;row-gap:6px;column-gap:12px;align-items:start}
+.card-t{font-size:16px;font-weight:600;line-height:1}
+.card-d{font-size:14px;color:var(--muted-foreground);grid-column:1}
+.card-a{grid-column:2;grid-row:1 / span 2;justify-self:end;align-self:start}
+.card-c{padding:0 24px}
+.card-f{padding:0 24px;display:flex;align-items:center;gap:8px}
+.badge{display:inline-flex;align-items:center;gap:4px;width:fit-content;padding:2px 8px;border:1px solid transparent;border-radius:calc(var(--radius) - 2px);font-size:12px;font-weight:500;line-height:16px;white-space:nowrap}
+.badge .i{width:12px;height:12px}
+.badge-outline{border-color:var(--border);color:var(--foreground)}
+.badge-outline.m{color:var(--muted-foreground);padding:2px 6px}
+.sep-v{width:1px;height:16px;background:var(--border);flex-shrink:0}
+.tabs{display:inline-flex;align-items:center;height:36px;padding:3px;border-radius:var(--radius);background:var(--muted);color:var(--muted-foreground)}
+.tab{height:100%;display:inline-flex;align-items:center;justify-content:center;padding:4px 8px;border:1px solid transparent;border-radius:calc(var(--radius) - 2px);background:transparent;color:inherit;font-family:inherit;font-size:14px;font-weight:500;white-space:nowrap;cursor:pointer}
+.tab.on{background:var(--background);color:var(--foreground);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05)}
+.ui.dark .tab.on{background:color-mix(in oklch,var(--input) 30%,transparent);border-color:var(--input)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl thead tr{background:var(--muted)}
+.tbl tr{border-bottom:1px solid var(--border);transition:background-color .15s}
+.tbl tbody tr:last-child{border-bottom:0}
+.tbl tbody tr:hover{background:color-mix(in oklch,var(--muted) 50%,transparent)}
+.tbl th{height:40px;padding:0 8px;text-align:left;font-weight:500;white-space:nowrap}
+.tbl td{padding:8px;white-space:nowrap;vertical-align:middle}
+.tbl .r{text-align:right}
+.prog{height:8px;width:100%;border-radius:999px;background:color-mix(in oklch,var(--primary) 20%,transparent);overflow:hidden}
+.prog>span{display:block;height:100%;background:var(--primary);border-radius:999px}
+.av{width:32px;height:32px;border-radius:8px;background:var(--muted);color:var(--foreground);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.app{display:flex;flex-wrap:wrap;min-height:100vh;background:var(--sidebar)}
+.sb{flex:1 1 256px;display:flex;flex-direction:column;padding:8px 0 8px 8px;color:var(--sidebar-foreground);font-size:14px}
+.sb-g{display:flex;flex-direction:column;gap:4px;padding:8px}
+.sb-l{height:32px;display:flex;align-items:center;padding:0 8px;font-size:12px;font-weight:500;color:color-mix(in oklch,var(--sidebar-foreground) 70%,transparent)}
+.sb-b{display:flex;align-items:center;gap:8px;height:32px;padding:8px;border-radius:calc(var(--radius) - 2px);color:var(--sidebar-foreground);text-decoration:none;font-size:14px;white-space:nowrap;overflow:hidden}
+.sb-b:hover{background:var(--sidebar-accent)}
+.sb-b.on{background:var(--sidebar-accent);font-weight:500}
+.sb-b.lg{height:48px}
+.logo{width:32px;height:32px;border-radius:8px;background:var(--primary);color:var(--primary-foreground);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.main{flex:999 1 560px;min-width:0;margin:8px;background:var(--background);border-radius:calc(var(--radius) + 4px);box-shadow:0 1px 2px 0 rgb(0 0 0 / .05);display:flex;flex-direction:column}
+.ui.dark .main{border:1px solid var(--border)}
+.hdr{height:48px;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.crumb{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted-foreground);min-width:0}
+.crumb .i{width:14px;height:14px}
+.crumb .cur{color:var(--foreground)}
+.page{padding:24px;display:flex;flex-direction:column;gap:24px}
+.ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.ph h1{font-size:24px;font-weight:600;letter-spacing:-.025em;line-height:32px}
+.row{display:flex;flex-wrap:wrap;gap:16px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.kpi{font-size:30px;font-weight:600;line-height:36px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+</style>
+</helmet>
+<div class="ui {{theme}}">
+<div class="app">
+  <aside class="sb" aria-label="Sidebar">
+    <div class="sb-g">
+      <a class="sb-b lg" href="Overview.dc.html">
+        <span class="logo"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg></span>
+        <span style="display:grid;line-height:1.25"><span style="font-weight:600">Fitness Tracker</span><span class="muted" style="font-size:12px">Personal</span></span>
+      </a>
+    </div>
+    <nav class="sb-g" aria-label="Training">
+      <div class="sb-l">Training</div>
+      <a class="sb-b on" href="Overview.dc.html" aria-current="page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>Overview</a>
+      <a class="sb-b" href="Workouts.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.4 14.4 9.6 9.6"></path><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z"></path><path d="m21.5 21.5-1.4-1.4"></path><path d="M3.9 3.9 2.5 2.5"></path><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"></path></svg>Workouts</a>
+      <a class="sb-b" href="History.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg>History</a>
+    </nav>
+    <nav class="sb-g" aria-label="Analytics">
+      <div class="sb-l">Analytics</div>
+      <a class="sb-b" href="Stats.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>Stats</a>
+      <a class="sb-b" href="Insights.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>Insights</a>
+      <a class="sb-b" href="Main.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path></svg>AI Coach</a>
+    </nav>
+    <div class="sb-g" style="margin-top:auto">
+      <a class="sb-b lg" href="#" aria-label="Account menu – Dana Levi">
+        <span class="av">DL</span>
+        <span style="display:grid;line-height:1.25;flex:1;min-width:0"><span style="font-weight:500">Dana Levi</span><span class="muted" style="font-size:12px;overflow:hidden;text-overflow:ellipsis">dana@example.com</span></span>
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="hdr">
+      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Toggle sidebar" style="margin-left:-4px"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path></svg></button>
+      <span class="sep-v" style="margin-right:4px"></span>
+      <nav class="crumb" aria-label="Breadcrumb"><span>Dashboard</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg><span class="cur" aria-current="page">Overview</span></nav>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:4px">
+        <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Toggle theme"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg></button>
+      </div>
+    </header>
+
+    <div class="page">
+      <div class="ph">
+        <div style="display:grid;gap:4px">
+          <p class="muted" lang="he" style="font-size:14px">יום שני, 19 באוקטובר</p>
+          <h1>Hey, Dana</h1>
+        </div>
+        <a class="btn btn-primary" href="Workouts.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>New Workout</a>
+      </div>
+
+      <div class="kpis">
+        <div class="card" style="gap:16px">
+          <div class="card-h">
+            <p class="card-d">Running distance</p>
+            <p class="kpi">35.3 km</p>
+            <div class="card-a"><span class="badge badge-outline"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>+12.5%</span></div>
+          </div>
+          <div class="card-f" style="flex-direction:column;align-items:flex-start;gap:6px;font-size:14px">
+            <div style="display:flex;align-items:center;gap:8px;font-weight:500">Trending up vs last week <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg></div>
+            <div class="muted">Last 7 days · goal 40 km</div>
+          </div>
+        </div>
+        <div class="card" style="gap:16px">
+          <div class="card-h">
+            <p class="card-d">Active time</p>
+            <p class="kpi">4h 53m</p>
+            <div class="card-a"><span class="badge badge-outline"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>+8.0%</span></div>
+          </div>
+          <div class="card-f" style="flex-direction:column;align-items:flex-start;gap:6px;font-size:14px">
+            <div style="display:flex;align-items:center;gap:8px;font-weight:500">Up 22 min vs last week <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg></div>
+            <div class="muted">Across 5 sessions</div>
+          </div>
+        </div>
+        <div class="card" style="gap:16px">
+          <div class="card-h">
+            <p class="card-d">Workouts</p>
+            <p class="kpi">5</p>
+            <div class="card-a"><span class="badge badge-outline"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>+1</span></div>
+          </div>
+          <div class="card-f" style="flex-direction:column;align-items:flex-start;gap:6px;font-size:14px">
+            <div style="display:flex;align-items:center;gap:8px;font-weight:500">One more than last week</div>
+            <div class="muted">3 runs · 1 strength · 1 ride</div>
+          </div>
+        </div>
+        <div class="card" style="gap:16px">
+          <div class="card-h">
+            <p class="card-d">Resting heart rate</p>
+            <p class="kpi">52 bpm</p>
+            <div class="card-a"><span class="badge badge-outline"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"></polyline><polyline points="16 17 22 17 22 11"></polyline></svg>−2 bpm</span></div>
+          </div>
+          <div class="card-f" style="flex-direction:column;align-items:flex-start;gap:6px;font-size:14px">
+            <div style="display:flex;align-items:center;gap:8px;font-weight:500">Down over 30 days <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"></polyline><polyline points="16 17 22 17 22 11"></polyline></svg></div>
+            <div class="muted">Lower is better</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">
+          <h2 class="card-t">Training volume</h2>
+          <p class="card-d">Weekly running distance · last 12 weeks</p>
+          <div class="card-a">
+            <div class="tabs" role="tablist" aria-label="Range">
+              <button class="tab {{r12}}" type="button" role="tab" onClick="{{pick12}}">12 weeks</button>
+              <button class="tab {{r4}}" type="button" role="tab" onClick="{{pick4}}">4 weeks</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-c">
+          <div style="position:relative">
+            <svg viewBox="0 0 1000 240" preserveAspectRatio="none" role="img" aria-label="Weekly running distance, rising from 28 km to 44 km over 12 weeks" style="display:block;width:100%;height:240px">
+              <defs>
+                <linearGradient id="ovFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" style="stop-color:var(--primary);stop-opacity:.22"></stop>
+                  <stop offset="95%" style="stop-color:var(--primary);stop-opacity:0"></stop>
+                </linearGradient>
+              </defs>
+              <line x1="0" x2="1000" y1="20" y2="20" vector-effect="non-scaling-stroke" style="stroke:var(--border)"></line>
+              <line x1="0" x2="1000" y1="125" y2="125" vector-effect="non-scaling-stroke" style="stroke:var(--border)"></line>
+              <line x1="0" x2="1000" y1="230" y2="230" vector-effect="non-scaling-stroke" style="stroke:var(--border)"></line>
+              <path d="M41.7,112.4 L125,99.8 L208.3,120.8 L291.7,87.2 L375,74.6 L458.3,91.4 L541.7,62 L625,53.6 L708.3,78.8 L791.7,41 L875,28.4 L958.3,45.2 L958.3,230 L41.7,230 Z" fill="url(#ovFill)"></path>
+              <polyline points="41.7,112.4 125,99.8 208.3,120.8 291.7,87.2 375,74.6 458.3,91.4 541.7,62 625,53.6 708.3,78.8 791.7,41 875,28.4 958.3,45.2" fill="none" vector-effect="non-scaling-stroke" style="stroke:var(--primary);stroke-width:2;stroke-linejoin:round"></polyline>
+              <line x1="875" x2="875" y1="20" y2="230" vector-effect="non-scaling-stroke" style="stroke:var(--border);stroke-dasharray:4 4"></line>
+            </svg>
+            <span aria-hidden="true" style="position:absolute;left:87.5%;top:28.4px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:999px;background:var(--primary);border:2px solid var(--background)"></span>
+            <div style="position:absolute;left:87.5%;top:44px;transform:translateX(-100%);margin-left:-12px;min-width:128px;display:grid;gap:6px;padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--background);box-shadow:0 20px 25px -5px rgb(0 0 0 / .1),0 8px 10px -6px rgb(0 0 0 / .1);font-size:12px">
+              <span style="font-weight:500">Week of Oct 5</span>
+              <span style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:2px;background:var(--primary)"></span><span class="muted">Distance</span><span class="num" style="margin-left:auto;font-family:'Geist Mono',ui-monospace,monospace;font-weight:500">48.0 km</span></span>
+            </div>
+          </div>
+          <div class="muted num" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));margin-top:8px;font-size:12px;text-align:center">
+            <span>Jul 27</span><span>Aug 3</span><span>Aug 10</span><span>Aug 17</span><span>Aug 24</span><span>Aug 31</span><span>Sep 7</span><span>Sep 14</span><span>Sep 21</span><span>Sep 28</span><span>Oct 5</span><span>Oct 12</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card" style="flex:2 1 520px">
+          <div class="card-h">
+            <h2 class="card-t">Recent workouts</h2>
+            <p class="card-d">Your last five sessions</p>
+            <div class="card-a"><a class="btn btn-ghost btn-sm" href="History.dc.html">View all<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></a></div>
+          </div>
+          <div class="card-c">
+            <div class="tbl-wrap">
+              <table class="tbl">
+                <thead><tr><th>Date</th><th>Workout</th><th>Type</th><th class="r">Duration</th><th class="r">Distance</th></tr></thead>
+                <tbody>
+                  <sc-for list="{{recent}}" as="w" hint-placeholder-count="5">
+                    <tr>
+                      <td class="muted num">{{w.date}}</td>
+                      <td style="font-weight:500">{{w.name}}</td>
+                      <td><span class="badge badge-outline m">{{w.type}}</span></td>
+                      <td class="r num">{{w.dur}}</td>
+                      <td class="r num">{{w.dist}}</td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="flex:1 1 300px">
+          <div class="card-h">
+            <h2 class="card-t">Weekly goals</h2>
+            <p class="card-d">Oct 13 – Oct 19</p>
+          </div>
+          <div class="card-c" style="display:grid;gap:20px">
+            <div style="display:grid;gap:8px">
+              <div style="display:flex;justify-content:space-between;font-size:14px"><span style="font-weight:500">Running distance</span><span class="muted num">35.3 / 40 km</span></div>
+              <div class="prog" role="progressbar" aria-label="Running distance" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"><span style="width:88%"></span></div>
+            </div>
+            <div style="display:grid;gap:8px">
+              <div style="display:flex;justify-content:space-between;font-size:14px"><span style="font-weight:500">Workouts</span><span class="muted num">5 / 6</span></div>
+              <div class="prog" role="progressbar" aria-label="Workouts" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100"><span style="width:83%"></span></div>
+            </div>
+            <div style="display:grid;gap:8px">
+              <div style="display:flex;justify-content:space-between;font-size:14px"><span style="font-weight:500">Strength sessions</span><span class="muted num">1 / 2</span></div>
+              <div class="prog" role="progressbar" aria-label="Strength sessions" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><span style="width:50%"></span></div>
+            </div>
+          </div>
+          <div class="card-f" style="margin-top:auto">
+            <a class="btn btn-outline btn-sm" href="Insights.dc.html" style="width:100%">See insights</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1140}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const range = (this.state && this.state.range) || '12';
+    return {
+      theme: this.props.dark ? 'dark' : '',
+      r12: range === '12' ? 'on' : '',
+      r4: range === '4' ? 'on' : '',
+      pick12: () => this.setState({ range: '12' }),
+      pick4: () => this.setState({ range: '4' }),
+      recent: [
+        { date: 'Oct 18', name: 'Long run', type: 'Run', dur: '1:42:10', dist: '18.0 km' },
+        { date: 'Oct 17', name: 'Upper body', type: 'Strength', dur: '55:00', dist: '—' },
+        { date: 'Oct 16', name: 'Tempo 6 km', type: 'Run', dur: '38:24', dist: '8.2 km' },
+        { date: 'Oct 15', name: 'Recovery spin', type: 'Cycling', dur: '45:00', dist: '16.5 km' },
+        { date: 'Oct 14', name: 'Intervals 6×800 m', type: 'Run', dur: '52:30', dist: '9.1 km' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
