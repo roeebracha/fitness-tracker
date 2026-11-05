@@ -4,7 +4,7 @@ const express = require("express");
 const { connectDB } = require("./config/db");
 require('dotenv').config();
 const authRoutes = require("./routes/authRoutes");
-
+const workoutRoutes = require("./routes/workoutRoute");
 
 const app = express();
 connectDB();
@@ -19,6 +19,8 @@ app.get("/welcome", (req, res) => {
 })
 
 app.use('/api/auth', authRoutes);
+app.use('/api/workouts', workoutRoutes);
+
 
 const PORT = 3000;
 
