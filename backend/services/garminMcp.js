@@ -2,9 +2,9 @@ const {Client} = require("@modelcontextprotocol/sdk/client/index.js");
 const {StreamableHTTPClientTransport} = require("@modelcontextprotocol/sdk/client/streamableHttp.js");
 
 async function callGarminTool(name, args ={}) {
-    const transport = new  StreamableHTTPClientTransport(new URL(Process.env.GARMIN_MCP_URL),{
+    const transport = new  StreamableHTTPClientTransport(new URL(process.env.GARMIN_MCP_URL),{
         requestInit:{
-            headers:{ Authorization:`Bearer ${MY_TOKEN}`}
+            headers:{ Authorization:`Bearer ${process.env.GARMIN_MCP_TOKEN}`}
         }
     });
     

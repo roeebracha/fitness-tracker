@@ -42,6 +42,7 @@ import {
   recentWorkouts,
   weeklyGoals,
 } from "@/data/data";
+import SyncGarminButton from "@/components/syncGarminButton";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -65,6 +66,7 @@ export default function Dashboard() {
           </p>
           <h1 className="text-2xl font-semibold tracking-tight">Hey, {firstname}</h1>
         </div>
+        <SyncGarminButton />
         <Button nativeButton={false} render={<Link to="/workouts" />}>
           <Plus />
           New Workout

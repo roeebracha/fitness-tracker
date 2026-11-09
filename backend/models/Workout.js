@@ -21,4 +21,4 @@ const workoutScheme = new mongoose.Schema({
 
 workoutScheme.index({ user: 1, garminActivityId: 1}, {unique: true});
 
-module.exports = mongoose.model("workout", workoutScheme);
+module.exports = mongoose.model("Workout", workoutScheme);

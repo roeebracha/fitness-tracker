@@ -2,19 +2,19 @@ const Workout = require("../models/Workout");
 const {callGarminTool} = require("./garminMcp");
 
 function toWorkout(activity, userId) {
-    return{
-        user: userId,
-        garminActivityId:String(activity.id),
-        type: activity.type,
-        startTime: activity.start_time ? new Date(activity.start_time) : undefined,
-        durationSeconds: activity.duratuin_seconds,
-        distanceMeters: activity.distance_meters,
-        calories: activity.calories,
-        avgHeartRate: activity.avh_hr.bpm,
-        maxHeartRate: activity.max_hr.bpm,
-        elevationGainMeters: activity.elevation_gain_meters,
-        raw:activity,
-    };
+  return {
+    user: userId,
+    garminActivityId: String(activity.id),
+    type: activity.type,
+    startTime: activity.start_time ? new Date(activity.start_time) : undefined,
+    durationSeconds: activity.duration_seconds,
+    distanceMeters: activity.distance_meters,
+    calories: activity.calories,
+    avgHeartRate: activity.avg_hr_bpm,
+    maxHeartRate: activity.max_hr_bpm,
+    elevationGainMeters: activity.elevation_gain_meters,
+    raw: activity,
+  };
 }
 
 async function syncGarminWorkouts(userId, maxActivities = 100){
